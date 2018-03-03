@@ -1,6 +1,6 @@
-public class AvailableColor extends ColorUnit
+public class BottleCap extends ColorUnit
 {
-    public AvailableColor(int hue, int saturation, int brightness, String name) {
+    public BottleCap(int hue, int saturation, int brightness, String name) {
         super(hue, saturation, brightness, name);
     }
 

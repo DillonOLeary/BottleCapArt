@@ -1,4 +1,4 @@
-public class TrueColor extends ColorUnit
+public class ColorFromPicture extends ColorUnit
 {
     @Override
     public int compareTo(Object o)
@@ -39,7 +39,7 @@ public class TrueColor extends ColorUnit
 
     private int xPosition;
     private int yPosition;
-    TrueColor(int hue, int saturation, int brightness, String name, int xPosition, int yPosition)
+    ColorFromPicture(int hue, int saturation, int brightness, String name, int xPosition, int yPosition)
     {
         super(hue, saturation, brightness, name);
         this.xPosition = xPosition;

@@ -1,9 +1,7 @@
-import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.TreeMap;
 
 public class ReadingFromFile
 {
@@ -35,7 +33,7 @@ public class ReadingFromFile
                 brightness = Integer.parseInt(lineElements[2]);
                 numCaps = Integer.parseInt(lineElements[3]);
                 capsName = lineElements[4];
-                AvailableColor col = new AvailableColor(hue, saturation, brightness, capsName);
+                BottleCap col = new BottleCap(hue, saturation, brightness, capsName);
                 list.add( new BottleTopType(numCaps, col) );
                 line = br.readLine();
                 if (line == null || line.contains("/"))
