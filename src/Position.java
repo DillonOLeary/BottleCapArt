@@ -20,13 +20,15 @@ public class Position extends ColorUnit {
             totalCaps += type.getNumCaps();
         }
         int numCapsInPicture = (int) (totalCaps * percentCapUsage);
-        double radius = Math.sqrt((img.width * img.height) / (2 * Math.sqrt(3) * ((double) numCapsInPicture)));
-        // calculate the xScalar and yScalar
-        double xScalar = 2 * radius;
-        double yScalar = Math.sqrt(3) * radius;
-        // calculate the oddRowOffset
-        double oddRowOffset = radius;
-        // calculate the numRows and numColumns
+        double radius = findRadius(numCapsInPicture, img.height, img.width);
+
+        //        double radius = 1.81583407312 Sqrt[(1/k) (m (n/(2 Sqrt[3])) - m/(4 Sqrt[3]));
+        //        // calculate the xScalar and yScalar
+        //        double xScalar = 2 * radius;
+        //        double yScalar = Math.sqrt(3) * radius;
+        //        // calculate the oddRowOffset
+        //        double oddRowOffset = radius;
+        //        // calculate the numRows and numColumns
         // loop through picture based on
 
 //        int bottleCapHeightNum = ((int)((float)img.height / .9)) / BottleCapVisualizer.BOTTLE_CAP_DIAMETER;
@@ -61,6 +63,42 @@ public class Position extends ColorUnit {
 //            System.out.println("Not enough bottle caps to make picture!!");
 //        System.out.println("Total number of caps in picture: " + total_count)
         return new ArrayList<>();
+    }
+
+    private static double findWidth(int numCaps, double radius, double hToWRatio) {
+        int capsInPicture = 0;
+        double rectangleHeight = radius * Math.sqrt(3);
+        double rectangleWidth = 2 * radius;
+        double width = (hToWRatio > 1)? radius : radius * 1 / hToWRatio;
+        double height = width * hToWRatio;
+
+        // Current loop requires at least a like 10 or so caps
+        while (capsInPicture <= numCaps) {
+            double dToNextX = width / rectangleWidth % 1;
+            double dToNextY = height / rectangleHeight % 1;
+            width += (dToNextY * hToWRatio > dToNextX)? dToNextY * (1/hToWRatio) : dToNextX;
+            height = width * hToWRatio;
+            capsInPicture = findNumCaps(radius, height, width);
+        }
+
+        return width;
+    }
+
+    private static double findRadius(int numCaps, double height, double width) {
+        double capRadius = 1.0;
+        double widthGivenRatio = findWidth(numCaps, capRadius, height/width);
+        double widthFactor = width/widthGivenRatio;
+        return capRadius * widthFactor;
+    }
+
+    private static int findNumCaps(double radius, double height, double width) {
+        double rectangleHeight = radius * Math.sqrt(3);
+        double rectangleWidth = 2 * radius;
+        int capsIfEachRowEqual = ((int) ( height / rectangleHeight)) *
+                ((int) (((width) - radius) / rectangleWidth));
+        int capsIfeachRowUnequal = ((int) ( height / rectangleHeight)) *
+                ((int) (width / rectangleWidth) - (int) (height / rectangleHeight));
+        return Math.max(capsIfEachRowEqual, capsIfeachRowUnequal);
     }
 
     @Override

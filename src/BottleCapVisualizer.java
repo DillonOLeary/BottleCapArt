@@ -9,6 +9,7 @@ public class BottleCapVisualizer extends PApplet
     public static final int WINDOW_WIDTH = 750;
     public static final int WINDOW_HEIGHT = 750;
     public static final int BOTTLE_CAP_DIAMETER = 25;
+
     private static ArrayList<BottleTopType> capList;
 //    private static PriorityQueue<ColorUnit> realColorQueue;
 //    private static boolean notEnoughCapsForPicture;
@@ -34,11 +35,12 @@ public class BottleCapVisualizer extends PApplet
     {
         colorMode(HSB, 100);
         background(100);
-        PImage img = loadImage("logo.jpg");
+        PImage img = loadImage("bascom_hall.jpg");
 
         resizePicture(img);
         positions = Position.setupPositions(img, capList, percentCapUsage);
         drawPicture(img);
+        System.out.println("The width and height: " + img.width + " x " + img.height);
     }
     public void draw()
     {
@@ -119,7 +121,21 @@ public class BottleCapVisualizer extends PApplet
 //        BottleTopType closest = null;
 //        for ( BottleTopType capType : capList)
 //        {
-//            if ( capType.getCOLOR_INFO().compareTo(closest.getCOLOR_INFO()) <= 0) //FIXME this may not be right
+////            if ( capType.getCOLOR_INFO().compareTo(closest.getCOLOR_INFO()) <= 0) //FIXME this may not be right
+//        realColorQueue.add(new TrueColor((int)ImgPixColorHue, (int)ImgPixColorSaturation,
+//                (int)ImgPixColorBrightness, "real img pix",xBottleCapPosition , yBottleCapPosition));
+//    }
+//    private void printBestBottleCap()
+//    {
+//        TrueColor realCap = (TrueColor) realColorQueue.remove();
+//        ColorUnit cap = realCap;
+////        if ( !capList.isEmpty() )
+//        if (false)
+//        {
+//            cap = getClosestColor(realCap);
+//            ColorUnit upper = capList.ceilingKey(realCap);
+//            ColorUnit lower = capList.floorKey(realCap);
+//            if ( upper == null )
 //            {
 //                closest = capType;
 //                try {
