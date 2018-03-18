@@ -29,21 +29,9 @@ public class ColorFromPicture extends ColorUnit
 //        return saturationComparison;
 
     }
-    public int getxPosition() {
-        return xPosition;
-    }
-
-    public int getyPosition() {
-        return yPosition;
-    }
-
-    private int xPosition;
-    private int yPosition;
-    ColorFromPicture(int hue, int saturation, int brightness, String name, int xPosition, int yPosition)
+    ColorFromPicture(int hue, int saturation, int brightness, String name)
     {
-        super(hue, saturation, brightness, name);
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+        super(hue, saturation, brightness);
 
     }
 }

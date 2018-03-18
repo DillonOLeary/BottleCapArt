@@ -1,23 +1,17 @@
 import processing.core.PApplet;
 import processing.core.PImage;
-
 import java.util.ArrayList;
-//import java.util.TreeMap;
 
-public class BottleCapVisualizer extends PApplet
-{
+public class BottleCapVisualizer extends PApplet {
     public static final int WINDOW_WIDTH = 750;
     public static final int WINDOW_HEIGHT = 750;
-    public static final int BOTTLE_CAP_DIAMETER = 25;
 
     private static ArrayList<BottleTopType> capList;
-//    private static PriorityQueue<ColorUnit> realColorQueue;
-//    private static boolean notEnoughCapsForPicture;
     private static ArrayList<Position> positions;
     private static float percentCapUsage;
+    private static PImage img;
 
-    public static void main(String args[])
-    {
+    public static void main(String args[]) {
         if (args.length == 0)
             throw new IllegalArgumentException("Add argument percent cap usage, float between 0 and 1");
         percentCapUsage = Float.parseFloat(args[0]);
@@ -31,22 +25,27 @@ public class BottleCapVisualizer extends PApplet
     {
         size(WINDOW_WIDTH,WINDOW_HEIGHT);
     }
-    public void setup()
-    {
+    public void setup() {
         colorMode(HSB, 100);
+        ellipseMode(CORNER);
         background(100);
-        PImage img = loadImage("logo.jpg");
+        img = loadImage("logo.jpg");
 
-        resizePicture(img);
+        resizePicture();
         positions = Position.setupPositions(img, capList, percentCapUsage);
-        drawPicture(img);
+        // Set all the real colors
+        for (Position pos : positions) {
+            pos.setRealColor(this.hueOfImage(pos), this.saturationOfImage(pos), this.brightnessOfImage(pos));
+        }
+        SimulatedAnnealing.SimulatedAnnealingAlgo(this, positions, capList);
+        drawPicture();
         System.out.println("The width and height: " + img.width + " x " + img.height);
     }
     public void draw()
     {
         // Probably not going to use, although it would be nice to show the current progress of the algorithm
     }
-    private void resizePicture(PImage img)
+    private void resizePicture()
     {
         while( (img.width > WINDOW_WIDTH) || (img.height > WINDOW_HEIGHT) )
         {
@@ -58,96 +57,29 @@ public class BottleCapVisualizer extends PApplet
             img.resize(img.width + 50, img.height + 50);
         }
     }
-    private void drawPicture(PImage img)
+    public void drawPicture()
     {
-        SimulatedAnnealing.SimulatedAnnealingAlgo(positions);
-//        for (Position pos : positions) {
-//            fill(pos.getHue(), pos.getSaturation(), pos.getBrightness());
-//            stroke(pos.getHue(), pos.getSaturation(), pos.getBrightness());
-//            ellipse(pos.getxPosition(), pos.getyPosition(), BOTTLE_CAP_DIAMETER, BOTTLE_CAP_DIAMETER);
-//        }
-
+        for (Position pos : positions) {
+            drawPosition(pos);
+        }
     }
-//    private void addToRealColorQueue(int yBottleCapPosition, int xBottleCapPosition, PImage img)
-//    {
-//
-//        int xPositionOfMiddle = xBottleCapPosition + (BOTTLE_CAP_DIAMETER/2);
-//        int yPositionOfMiddle = yBottleCapPosition + (BOTTLE_CAP_DIAMETER/2);
-//
-//        float ImgPixColorHue = hue(img.get(xPositionOfMiddle,yPositionOfMiddle));
-//        float ImgPixColorSaturation = saturation(img.get(xPositionOfMiddle,yPositionOfMiddle));
-//        float ImgPixColorBrightness = brightness(img.get(xPositionOfMiddle,yPositionOfMiddle));
-//
-//
-//        realColorQueue.add(new ColorFromPicture((int)ImgPixColorHue, (int)ImgPixColorSaturation,
-//                (int)ImgPixColorBrightness, "real img pix",xBottleCapPosition , yBottleCapPosition));
-//    }
-//    private void printBestBottleCap()
-//    {
-//        ColorFromPicture realCap = (ColorFromPicture) realColorQueue.remove();
-//        ColorUnit cap = realCap;
-//        if ( !capList.isEmpty() )
-//        {
-//            cap = getClosestColor(realCap);
-////            ColorUnit upper = capList.ceilingKey(realCap);
-////            ColorUnit lower = capList.floorKey(realCap);
-////            if ( upper == null )
-////            {
-////                closest = lower;
-////            } else if ( lower == null) {
-////                closest = upper;
-////            } else {
-////
-////                if (Math.abs(upper.compareTo(realCap)) <= Math.abs(lower.compareTo(realCap)) )
-////                    closest = upper;
-////                else
-////                    closest = lower;
-////            }
-////            try {
-////                cap = capList.get(closest).removeACap();
-////            } catch (RuntimeException e) {
-////                capList.remove(closest);
-////            }
-//        } else {
-//            cap = realCap;
-//            notEnoughCapsForPicture = true;
-//        }
-//        fill(cap.getHue(), cap.getSaturation(), cap.getBrightness());
-//        stroke(cap.getHue(), cap.getSaturation(), cap.getBrightness());
-//        ellipse(realCap.getxPosition(), realCap.getyPosition(), BOTTLE_CAP_DIAMETER, BOTTLE_CAP_DIAMETER);
-//    }
 
-//    private ColorUnit getClosestColor(ColorFromPicture realCap) {
-//        BottleTopType closest = null;
-//        for ( BottleTopType capType : capList)
-//        {
-////            if ( capType.getCOLOR_INFO().compareTo(closest.getCOLOR_INFO()) <= 0) //FIXME this may not be right
-//        realColorQueue.add(new TrueColor((int)ImgPixColorHue, (int)ImgPixColorSaturation,
-//                (int)ImgPixColorBrightness, "real img pix",xBottleCapPosition , yBottleCapPosition));
-//    }
-//    private void printBestBottleCap()
-//    {
-//        TrueColor realCap = (TrueColor) realColorQueue.remove();
-//        ColorUnit cap = realCap;
-////        if ( !capList.isEmpty() )
-//        if (false)
-//        {
-//            cap = getClosestColor(realCap);
-//            ColorUnit upper = capList.ceilingKey(realCap);
-//            ColorUnit lower = capList.floorKey(realCap);
-//            if ( upper == null )
-//            {
-//                closest = capType;
-//                try {
-//                    capType.removeACap();
-//                } catch (RuntimeException e) {
-//                    capList.remove(closest);
-//                }
-//            }
-//        }
-//
-//        return closest.getCOLOR_INFO();
-//    }
+    public void drawPosition(Position pos) {
+        fill(pos.getHue(), pos.getSaturation(), pos.getBrightness());
+        stroke(pos.getHue(), pos.getSaturation(), pos.getBrightness());
+        ellipse(pos.x_leftCorner, pos.y_topCorner, pos.radius * 2, pos.radius * 2);
+    }
+
+    // FIXME these aren't reading the correct hue saturation of brightness but give a general idea
+    public int brightnessOfImage(Position pos) {
+        return (int) brightness(img.get(pos.x_leftCorner, pos.y_topCorner));
+    }
+    public int hueOfImage(Position pos) {
+        return (int) hue(img.get(pos.x_leftCorner, pos.y_topCorner));
+    }
+    public int saturationOfImage(Position pos) {
+        return (int) saturation(img.get(pos.x_leftCorner, pos.y_topCorner));
+    }
 
 }
 // notes from Jack:

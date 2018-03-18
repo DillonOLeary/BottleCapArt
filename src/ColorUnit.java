@@ -4,7 +4,7 @@ abstract public class ColorUnit implements Comparable
     @Override
     public String toString()
     {
-        return hue + "," + saturation + "," + brightness + "," + "," + name;
+        return hue + "," + saturation + "," + brightness;
     }
 //    @Override
 //    public int compareTo(Object o)
@@ -27,14 +27,14 @@ abstract public class ColorUnit implements Comparable
     protected int hue;
     protected int saturation;
     protected int brightness;
-    private String name;
+//    private String name;
 
-    public ColorUnit(int hue, int saturation, int brightness, String name)
+    public ColorUnit(int hue, int saturation, int brightness)
     {
         this.hue = hue;
         this.saturation = saturation;
         this.brightness = brightness;
-        this.name = name;
+//        this.name = name;
     }
 
     public int getHue()
@@ -52,9 +52,9 @@ abstract public class ColorUnit implements Comparable
         return brightness;
     }
 
-    public String getName()
-    {
-        return name;
-    }
+//    public String getName()
+//    {
+//        return name;
+//    }
 
 }

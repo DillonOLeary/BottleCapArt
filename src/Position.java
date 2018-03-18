@@ -2,16 +2,53 @@ import processing.core.PImage;
 
 import java.util.ArrayList;
 
-public class Position extends ColorUnit {
+public class Position {
     private BottleCap cap;
     private ColorFromPicture realColor;
     int x_leftCorner;
     int y_topCorner;
+    int radius;
 
-    public Position(int x_leftCorner, int y_topCorner) {
-        super(0, 0, 0, "default");
+    public Position(int x_leftCorner, int y_topCorner, int radius) {
+//        setRealColor(colorUnit.hue, colorUnit.saturation, colorUnit.brightness);
         this.x_leftCorner = x_leftCorner;
         this.y_topCorner = y_topCorner;
+        this.radius = radius;
+        cap = null;
+        realColor = null;
+    }
+
+    public void setRealColor(int hue, int saturation, int brightness) {
+        if (realColor != null)
+            throw new RuntimeException("You can't set the color in the picture twice! That doesn't make sense!");
+        realColor = new ColorFromPicture(hue, saturation, brightness, "PICTURE_COLOR");
+    }
+    // IDK which one to ues
+    private void setRealColor(ColorFromPicture col) {
+        if (realColor != null)
+            throw new RuntimeException("You can't set the color in the picture twice! That doesn't make sense!");
+        realColor = col;
+    }
+
+    /**
+     *
+     * @param cap the cap to be placed in the spot
+     * @return the cap or null if there was no cap there
+     */
+    public BottleCap replaceCap(BottleCap cap) {
+        if (cap == null) {
+            setCap(cap);
+            return null;
+        }
+        else {
+            BottleCap oldCap = this.cap;
+            this.cap = cap;
+            return oldCap;
+        }
+    }
+
+    private void setCap(BottleCap cap) {
+        this.cap = cap;
     }
 
     public static ArrayList<Position> setupPositions(PImage img, ArrayList<BottleTopType> capList, float percentCapUsage) {
@@ -27,17 +64,17 @@ public class Position extends ColorUnit {
         // calculate the oddRowOffset
         // THIS WILL MAKE THE ROW OFFSET LESS ACCURATE
         int oddRowOffset = (int) Math.round(radius);
-        Position currPosition = new Position(0,0);
+        Position currPosition = new Position(0,0, (int) radius);
         boolean isOddRow = false;
         ArrayList<Position> positionList = new ArrayList<>();
         while (currPosition.y_topCorner <= img.height - yScalar) {
             while (currPosition.x_leftCorner <= img.width - xScalar) {
-                positionList.add(new Position(currPosition.x_leftCorner, currPosition.y_topCorner));
+                positionList.add(new Position(currPosition.x_leftCorner, currPosition.y_topCorner, (int) radius));
                 currPosition.x_leftCorner += xScalar;
             }
             currPosition.y_topCorner += yScalar;
-            currPosition.x_leftCorner = (isOddRow)? oddRowOffset : 0;
             isOddRow = !isOddRow;
+            currPosition.x_leftCorner = (isOddRow)? oddRowOffset : 0;
         }
         return positionList;
     }
@@ -81,9 +118,30 @@ public class Position extends ColorUnit {
         return Math.max(capsIfEachRowEqual, capsIfeachRowUnequal);
     }
 
-    @Override
-    public int compareTo(Object o) {
-        // FIXME unimplemented
-        return 0;
+    public int getHue() {
+        if (cap != null)
+            return cap.hue;
+        else if (realColor != null)
+            return realColor.hue;
+        else
+            throw new RuntimeException("You called hue with out providing a cap of a real color!");
+    }
+
+    public int getSaturation() {
+        if (cap != null)
+            return cap.saturation;
+        else if (realColor != null)
+            return realColor.saturation;
+        else
+            throw new RuntimeException("You called saturation with out providing a cap of a real color!");
+    }
+
+    public int getBrightness() {
+        if (cap != null)
+            return cap.brightness;
+        else if (realColor != null)
+            return realColor.brightness;
+        else
+            throw new RuntimeException("You called brightness with out providing a cap of a real color!");
     }
 }

@@ -1,7 +1,14 @@
 public class BottleCap extends ColorUnit
 {
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
     public BottleCap(int hue, int saturation, int brightness, String name) {
-        super(hue, saturation, brightness, name);
+        super(hue, saturation, brightness);
+        this.name = name;
     }
 
     @Override
