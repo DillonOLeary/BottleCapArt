@@ -8,7 +8,7 @@ public class BottleCapVisualizer extends PApplet {
 
     private static ArrayList<BottleTopType> capList;
     private static ArrayList<Position> positions;
-    private static float percentCapUsage;
+    public static float percentCapUsage;
     private static PImage img;
 
     public static void main(String args[]) {
@@ -37,7 +37,8 @@ public class BottleCapVisualizer extends PApplet {
         for (Position pos : positions) {
             pos.setRealColor(this.hueOfImage(pos), this.saturationOfImage(pos), this.brightnessOfImage(pos));
         }
-        SimulatedAnnealing.SimulatedAnnealingAlgo(this, positions, capList);
+        positions = LocalSearch.hillClimbing(positions, capList);
+//        LocalSearch.SimulatedAnnealingAlgo(positions, capList);
         drawPicture();
         System.out.println("The width and height: " + img.width + " x " + img.height);
     }

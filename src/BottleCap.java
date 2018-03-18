@@ -31,4 +31,11 @@ public class BottleCap extends ColorUnit
 //        return saturationComparison;
 
     }
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof BottleCap)
+            return ((BottleCap) o).getName().equals(this.name);
+        else
+            return false;
+    }
 }

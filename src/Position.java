@@ -47,6 +47,15 @@ public class Position {
         }
     }
 
+    public Position copyPosition() {
+        Position newPos = new Position(this.x_leftCorner, this.y_topCorner, this.radius);
+        if (this.realColor != null)
+            newPos.setRealColor(this.realColor.hue, this.realColor.saturation, this.realColor.brightness);
+        if (this.cap != null)
+            newPos.replaceCap(new BottleCap(this.cap.hue,this.cap.saturation,this.cap.brightness, this.cap.getName()));
+        return newPos;
+    }
+
     private void setCap(BottleCap cap) {
         this.cap = cap;
     }
@@ -143,5 +152,20 @@ public class Position {
             return realColor.brightness;
         else
             throw new RuntimeException("You called brightness with out providing a cap of a real color!");
+    }
+
+    public BottleCap getCap() {
+        return cap;
+    }
+
+    public double evaluatePos() {
+        // TODO what does the evaluation look like?
+        return Math.abs(realColor.brightness - cap.brightness);
+//        return Math.abs(realColor.hue - cap.hue);
+    }
+
+    @Override
+    public String toString() {
+        return "Cap is " + cap.toString() + " X: " + x_leftCorner + " Y: " + y_topCorner;
     }
 }
