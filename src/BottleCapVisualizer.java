@@ -35,7 +35,7 @@ public class BottleCapVisualizer extends PApplet
     {
         colorMode(HSB, 100);
         background(100);
-        PImage img = loadImage("bascom_hall.jpg");
+        PImage img = loadImage("logo.jpg");
 
         resizePicture(img);
         positions = Position.setupPositions(img, capList, percentCapUsage);
