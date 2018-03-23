@@ -1,0 +1,4 @@
+2 inches by 2 inches, 70 pixels per inch2 inches by 2 inches, 70 pixels per inch.
+
+///////// THE caps.txt file //////
+<numCaps>,<capImageName>

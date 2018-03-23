@@ -29,7 +29,7 @@ public class BottleCapVisualizer extends PApplet {
         colorMode(HSB, 100);
         ellipseMode(CORNER);
         background(100);
-        img = loadImage("logo.jpg");
+        img = loadImage("state_street.jpg");
 
         resizePicture();
         positions = Position.setupPositions(img, capList, percentCapUsage);
@@ -80,6 +80,16 @@ public class BottleCapVisualizer extends PApplet {
     }
     public int saturationOfImage(Position pos) {
         return (int) saturation(img.get(pos.x_leftCorner, pos.y_topCorner));
+    }
+
+    public int brightnessOfImage(PImage img, int x, int y) {
+        return (int) brightness(img.get(x, y));
+    }
+    public int hueOfImage(PImage img, int x, int y) {
+        return (int) hue(img.get(x, y));
+    }
+    public int saturationOfImage(PImage img, int x, int y) {
+        return (int) saturation(img.get(x, y));
     }
 
 }

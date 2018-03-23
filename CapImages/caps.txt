@@ -1,0 +1,3 @@
+30,CCCap.jpg
+45,NGCap.jpg
+25,STCap.jpg

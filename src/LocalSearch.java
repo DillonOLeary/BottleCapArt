@@ -15,7 +15,7 @@ public class LocalSearch {
             if (nextBestState.evaluateState() <= currState.evaluateState())
                 break;
             currState = nextBestState;
-            System.out.println("This round's best state: " + currState.evaluateState());
+            System.out.println("This round's best state: " + currState);
         }
         return currState.getPositions();
     }

@@ -52,12 +52,16 @@ public class State {
         int capFromBankPosition = rnd.nextInt(unusedTops.size());
         BottleCap capFromBank = unusedTops.get(capFromBankPosition).removeACap();
         int positionOnPicture = rnd.nextInt(positions.size());
+        boolean addedBack = false;
         for (BottleTopType type : unusedTops) {
             if (type.getCOLOR_INFO().equals(positions.get(positionOnPicture).getCap())) {
                 type.addCapBack(positions.get(positionOnPicture).getCap());
+                addedBack = true;
                 break;
             }
         }
+        if (!addedBack)
+            unusedTops.add(new BottleTopType(1, positions.get(positionOnPicture).getCap()));
         if (unusedTops.get(capFromBankPosition).getNumCaps() <= 0)
             unusedTops.remove(capFromBankPosition);
         positions.get(positionOnPicture).replaceCap(capFromBank);
@@ -92,9 +96,9 @@ public class State {
         return positions;
     }
     public List<State> generateSuccessors() {
-        // TODO how many successors?? I'll just go with 200
+        // TODO how many successors?? I'll just go with 100
         List<State> successors = new ArrayList<>();
-        for (int i=0; i<200; i++) {
+        for (int i=0; i<100; i++) {
             State newState = new State(this);
             newState.next();
             successors.add(newState);
