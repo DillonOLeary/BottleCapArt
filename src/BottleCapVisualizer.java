@@ -29,7 +29,7 @@ public class BottleCapVisualizer extends PApplet {
         colorMode(HSB, 100);
         ellipseMode(CORNER);
         background(100);
-        img = loadImage("state_street.jpg");
+        img = loadImage("obama.jpg");
 
         resizePicture();
         positions = Position.setupPositions(img, capList, percentCapUsage);
