@@ -1,5 +1,10 @@
+import processing.core.PImage;
+
+import java.util.ArrayList;
+
 public class ColorFromPicture extends ColorUnit
 {
+    String name;
     @Override
     public int compareTo(Object o)
     {
@@ -29,9 +34,9 @@ public class ColorFromPicture extends ColorUnit
 //        return saturationComparison;
 
     }
-    ColorFromPicture(int hue, int saturation, int brightness, String name)
+    ColorFromPicture(PImage area, String name)
     {
-        super(hue, saturation, brightness);
-
+        super(area);
+        this.name = name;
     }
 }

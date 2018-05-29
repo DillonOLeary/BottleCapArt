@@ -18,10 +18,10 @@ public class Position {
         realColor = null;
     }
 
-    public void setRealColor(int hue, int saturation, int brightness) {
+    public void setRealColor(PImage img) {
         if (realColor != null)
             throw new RuntimeException("You can't set the color in the picture twice! That doesn't make sense!");
-        realColor = new ColorFromPicture(hue, saturation, brightness, "PICTURE_COLOR");
+        realColor = new ColorFromPicture(img, "PICTURE_COLOR");
     }
     // IDK which one to ues
     private void setRealColor(ColorFromPicture col) {
@@ -50,9 +50,9 @@ public class Position {
     public Position copyPosition() {
         Position newPos = new Position(this.x_leftCorner, this.y_topCorner, this.radius);
         if (this.realColor != null)
-            newPos.setRealColor(this.realColor.hue, this.realColor.saturation, this.realColor.brightness);
+            newPos.setRealColor(this.realColor.image);
         if (this.cap != null)
-            newPos.replaceCap(new BottleCap(this.cap.hue,this.cap.saturation,this.cap.brightness, this.cap.getName()));
+            newPos.replaceCap(new BottleCap(this.cap.image));
         return newPos;
     }
 

@@ -1,3 +1,6 @@
+import processing.core.PApplet;
+import processing.core.PImage;
+
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -5,6 +8,7 @@ import java.util.ArrayList;
 
 public class ReadingFromFile
 {
+    static PApplet applet = new PApplet();
     public static void addTopsFromFile(String filename, ArrayList<BottleTopType> list)
     {
         try {
@@ -19,21 +23,15 @@ public class ReadingFromFile
         BufferedReader br = new BufferedReader(new FileReader(filename));
         try {
             String line = br.readLine();
-            int hue;
-            int saturation;
-            int brightness;
             int numCaps;
-            String capsName;
+            PImage img;
             String[] lineElements;
 
             while (line != null) {
                 lineElements = line.split(",");
-                hue = Integer.parseInt(lineElements[0]);
-                saturation = Integer.parseInt(lineElements[1]);
-                brightness = Integer.parseInt(lineElements[2]);
-                numCaps = Integer.parseInt(lineElements[3]);
-                capsName = lineElements[4];
-                BottleCap col = new BottleCap(hue, saturation, brightness, capsName);
+                numCaps = Integer.parseInt(lineElements[0]);
+                img = applet.loadImage(lineElements[1]);
+                BottleCap col = new BottleCap(img);
                 list.add( new BottleTopType(numCaps, col) );
                 line = br.readLine();
                 if (line == null || line.contains("/"))

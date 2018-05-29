@@ -1,3 +1,5 @@
+import processing.core.PImage;
+
 public class BottleCap extends ColorUnit
 {
     private String name;
@@ -6,9 +8,9 @@ public class BottleCap extends ColorUnit
         return name;
     }
 
-    public BottleCap(int hue, int saturation, int brightness, String name) {
-        super(hue, saturation, brightness);
-        this.name = name;
+    public BottleCap(PImage img) {
+        super(img);
+        this.name = img.toString();
     }
 
     @Override

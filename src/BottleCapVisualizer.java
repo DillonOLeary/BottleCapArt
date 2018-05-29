@@ -35,7 +35,7 @@ public class BottleCapVisualizer extends PApplet {
         positions = Position.setupPositions(img, capList, percentCapUsage);
         // Set all the real colors
         for (Position pos : positions) {
-            pos.setRealColor(this.hueOfImage(pos), this.saturationOfImage(pos), this.brightnessOfImage(pos));
+            pos.setRealColor(PImage area);
         }
         positions = LocalSearch.hillClimbing(positions, capList);
 //        LocalSearch.SimulatedAnnealingAlgo(positions, capList);
@@ -72,25 +72,15 @@ public class BottleCapVisualizer extends PApplet {
     }
 
     // FIXME these aren't reading the correct hue saturation of brightness but give a general idea
-    public int brightnessOfImage(Position pos) {
-        return (int) brightness(img.get(pos.x_leftCorner, pos.y_topCorner));
-    }
-    public int hueOfImage(Position pos) {
-        return (int) hue(img.get(pos.x_leftCorner, pos.y_topCorner));
-    }
-    public int saturationOfImage(Position pos) {
-        return (int) saturation(img.get(pos.x_leftCorner, pos.y_topCorner));
-    }
-
-    public int brightnessOfImage(PImage img, int x, int y) {
-        return (int) brightness(img.get(x, y));
-    }
-    public int hueOfImage(PImage img, int x, int y) {
-        return (int) hue(img.get(x, y));
-    }
-    public int saturationOfImage(PImage img, int x, int y) {
-        return (int) saturation(img.get(x, y));
-    }
+//    public int brightnessOfImage(Position pos) {
+//        return (int) brightness(img.get(pos.x_leftCorner, pos.y_topCorner));
+//    }
+//    public int hueOfImage(Position pos) {
+//        return (int) hue(img.get(pos.x_leftCorner, pos.y_topCorner));
+//    }
+//    public int saturationOfImage(Position pos) {
+//        return (int) saturation(img.get(pos.x_leftCorner, pos.y_topCorner));
+//    }
 
 }
 // notes from Jack:
