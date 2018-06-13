@@ -1,14 +1,14 @@
 import processing.core.PApplet;
 import processing.core.PImage;
+
 import java.util.ArrayList;
 
-abstract public class ColorUnit implements Comparable
-{
+abstract public class ColorUnit implements Comparable {
     static PApplet app = new PApplet();
     PImage image;
+
     @Override
-    public String toString()
-    {
+    public String toString() {
         return hue + "," + saturation + "," + brightness;
     }
 
@@ -43,18 +43,18 @@ abstract public class ColorUnit implements Comparable
             brightnessSum += i[2];
         }
 
-        hue = (int) (hueSum/selectPixelsWithinColorUnit.size());
-        saturation = (int) (saturationSum/selectPixelsWithinColorUnit.size());
-        brightness = (int) (brightnessSum/selectPixelsWithinColorUnit.size());
+        hue = (int) (hueSum / selectPixelsWithinColorUnit.size());
+        saturation = (int) (saturationSum / selectPixelsWithinColorUnit.size());
+        brightness = (int) (brightnessSum / selectPixelsWithinColorUnit.size());
 
         for (int[] i : selectPixelsWithinColorUnit) {
             hueNum += Math.pow((double) (i[0] - hue), 2);
             saturationNum += Math.pow((double) (i[1] - saturation), 2);
             brightnessNum += Math.pow((double) (i[2] - brightness), 2);
         }
-        hueStandardDeviation = Math.sqrt(hueNum/selectPixelsWithinColorUnit.size());
-        saturationStandardDeviation = Math.sqrt(saturationNum/selectPixelsWithinColorUnit.size());
-        brightnessStandardDeviation = Math.sqrt(brightnessNum/selectPixelsWithinColorUnit.size());
+        hueStandardDeviation = Math.sqrt(hueNum / selectPixelsWithinColorUnit.size());
+        saturationStandardDeviation = Math.sqrt(saturationNum / selectPixelsWithinColorUnit.size());
+        brightnessStandardDeviation = Math.sqrt(brightnessNum / selectPixelsWithinColorUnit.size());
     }
 
     /**
@@ -67,16 +67,16 @@ abstract public class ColorUnit implements Comparable
      */
     private void readCircleInPicture(PImage circleArea) {
         selectPixelsWithinColorUnit = new ArrayList<>();
-        double radius = circleArea.width/2;
+        double radius = circleArea.width / 2;
         int numRows = 10;
         int numCols = numRows;
-        int centerX = circleArea.width/2;
-        int centerY = circleArea.height/2;
+        int centerX = circleArea.width / 2;
+        int centerY = circleArea.height / 2;
 
-        for (int row = circleArea.height/numRows/2; row < circleArea.height; row += circleArea.height/numRows) {
-            for (int col = circleArea.width/numCols/2; col < circleArea.width; col += circleArea.width/numCols) {
-                if (distanceToCenter(centerX,centerY,col,row) < radius) {
-                    int[] hsb =  {hueOfImage(circleArea, col, row),
+        for (int row = circleArea.height / numRows / 2; row < circleArea.height; row += circleArea.height / numRows) {
+            for (int col = circleArea.width / numCols / 2; col < circleArea.width; col += circleArea.width / numCols) {
+                if (distanceToCenter(centerX, centerY, col, row) < radius) {
+                    int[] hsb = {hueOfImage(circleArea, col, row),
                             saturationOfImage(circleArea, col, row),
                             brightnessOfImage(circleArea, col, row)};
                     selectPixelsWithinColorUnit.add(hsb);
@@ -88,15 +88,17 @@ abstract public class ColorUnit implements Comparable
     public int brightnessOfImage(PImage img, int x, int y) {
         return (int) app.brightness(img.get(x, y));
     }
+
     public int hueOfImage(PImage img, int x, int y) {
         return (int) app.hue(img.get(x, y));
     }
+
     public int saturationOfImage(PImage img, int x, int y) {
         return (int) app.saturation(img.get(x, y));
     }
 
     public double distanceToCenter(int centerX, int centerY, int currX, int currY) {
-        return Math.sqrt(Math.pow(centerY-currY,2) + Math.pow(centerX-currX,2));
+        return Math.sqrt(Math.pow(centerY - currY, 2) + Math.pow(centerX - currX, 2));
     }
 //    public ColorUnit(ArrayList<int[]> selectPixelsWithinColorUnit)
 //    {
@@ -104,21 +106,17 @@ abstract public class ColorUnit implements Comparable
 //        calcMeansAndStdDev();
 //    }
 
-    public int getHue()
-    {
+    public int getHue() {
         return hue;
     }
 
-    public int getSaturation()
-    {
+    public int getSaturation() {
         return saturation;
     }
 
-    public int getBrightness()
-    {
+    public int getBrightness() {
         return brightness;
     }
-
 
 
 }

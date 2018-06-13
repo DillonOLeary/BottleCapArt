@@ -1,7 +1,6 @@
 import processing.core.PImage;
 
-public class BottleCap extends ColorUnit
-{
+public class BottleCap extends ColorUnit {
     private String name;
 
     public String getName() {
@@ -14,17 +13,15 @@ public class BottleCap extends ColorUnit
     }
 
     @Override
-    public int compareTo(Object o)
-    {
+    public int compareTo(Object o) {
         if (o instanceof ColorUnit)
             return compareBottleCapTypes((ColorUnit) o);
-        else
-        {
+        else {
             throw new RuntimeException();
         }
     }
-    private int compareBottleCapTypes(ColorUnit bC)
-    {
+
+    private int compareBottleCapTypes(ColorUnit bC) {
         int hueComparison = this.hue - bC.hue;
         int saturationComparison = this.saturation - bC.saturation;
         int brightnessComparison = this.brightness - bC.brightness;
@@ -33,6 +30,7 @@ public class BottleCap extends ColorUnit
 //        return saturationComparison;
 
     }
+
     @Override
     public boolean equals(Object o) {
         if (o instanceof BottleCap)

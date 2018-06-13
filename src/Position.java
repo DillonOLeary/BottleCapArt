@@ -24,11 +24,11 @@ public class Position {
         realColor = new ColorFromPicture(img, "PICTURE_COLOR");
     }
     // IDK which one to ues
-    private void setRealColor(ColorFromPicture col) {
-        if (realColor != null)
-            throw new RuntimeException("You can't set the color in the picture twice! That doesn't make sense!");
-        realColor = col;
-    }
+//    private void setRealColor(ColorFromPicture col) {
+//        if (realColor != null)
+//            throw new RuntimeException("You can't set the color in the picture twice! That doesn't make sense!");
+//        realColor = col;
+//    }
 
     /**
      *
