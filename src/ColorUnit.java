@@ -88,26 +88,9 @@ abstract public class ColorUnit implements Comparable {
         }
     }
 
-//    public int brightnessOfImage(PImage img, int x, int y) {
-//        return (int) app.brightness(img.get(x, y));
-//    }
-//
-//    public int hueOfImage(PImage img, int x, int y) {
-//        return (int) app.hue(img.get(x, y));
-//    }
-//
-//    public int saturationOfImage(PImage img, int x, int y) {
-//        return (int) app.saturation(img.get(x, y));
-//    }
-
     public double distanceToCenter(int centerX, int centerY, int currX, int currY) {
         return Math.sqrt(Math.pow(centerY - currY, 2) + Math.pow(centerX - currX, 2));
     }
-//    public ColorUnit(ArrayList<int[]> selectPixelsWithinColorUnit)
-//    {
-//        this.selectPixelsWithinColorUnit = selectPixelsWithinColorUnit;
-//        calcMeansAndStdDev();
-//    }
 
     public int getHue() {
         return hue;
@@ -121,5 +104,15 @@ abstract public class ColorUnit implements Comparable {
         return brightness;
     }
 
+    public double getHueStandardDeviation() {
+        return hueStandardDeviation;
+    }
 
+    public double getSaturationStandardDeviation() {
+        return saturationStandardDeviation;
+    }
+
+    public double getBrightnessStandardDeviation() {
+        return brightnessStandardDeviation;
+    }
 }
