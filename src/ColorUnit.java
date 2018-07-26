@@ -4,7 +4,8 @@ import processing.core.PImage;
 import java.util.ArrayList;
 
 abstract public class ColorUnit implements Comparable {
-    static PApplet app = new PApplet();
+    static ColorUtils app = new ColorUtils();
+
     PImage image;
 
     @Override
@@ -27,6 +28,8 @@ abstract public class ColorUnit implements Comparable {
 
     public ColorUnit(PImage circleArea) {
         image = circleArea;
+        readCircleInPicture(circleArea);
+        calcMeansAndStdDev();
     }
 
     private void calcMeansAndStdDev() {
@@ -76,26 +79,26 @@ abstract public class ColorUnit implements Comparable {
         for (int row = circleArea.height / numRows / 2; row < circleArea.height; row += circleArea.height / numRows) {
             for (int col = circleArea.width / numCols / 2; col < circleArea.width; col += circleArea.width / numCols) {
                 if (distanceToCenter(centerX, centerY, col, row) < radius) {
-                    int[] hsb = {hueOfImage(circleArea, col, row),
-                            saturationOfImage(circleArea, col, row),
-                            brightnessOfImage(circleArea, col, row)};
+                    int[] hsb = {app.hueOfImage(circleArea, col, row),
+                            app.saturationOfImage(circleArea, col, row),
+                            app.brightnessOfImage(circleArea, col, row)};
                     selectPixelsWithinColorUnit.add(hsb);
                 }
             }
         }
     }
 
-    public int brightnessOfImage(PImage img, int x, int y) {
-        return (int) app.brightness(img.get(x, y));
-    }
-
-    public int hueOfImage(PImage img, int x, int y) {
-        return (int) app.hue(img.get(x, y));
-    }
-
-    public int saturationOfImage(PImage img, int x, int y) {
-        return (int) app.saturation(img.get(x, y));
-    }
+//    public int brightnessOfImage(PImage img, int x, int y) {
+//        return (int) app.brightness(img.get(x, y));
+//    }
+//
+//    public int hueOfImage(PImage img, int x, int y) {
+//        return (int) app.hue(img.get(x, y));
+//    }
+//
+//    public int saturationOfImage(PImage img, int x, int y) {
+//        return (int) app.saturation(img.get(x, y));
+//    }
 
     public double distanceToCenter(int centerX, int centerY, int currX, int currY) {
         return Math.sqrt(Math.pow(centerY - currY, 2) + Math.pow(centerX - currX, 2));
