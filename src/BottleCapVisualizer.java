@@ -42,19 +42,20 @@ public class BottleCapVisualizer extends PApplet {
                     pos.radius * 2, pos.radius * 2));
         }
         positions = LocalSearch.hillClimbing(positions, capList);
-//        LocalSearch.SimulatedAnnealingAlgo(positions, capList);
-//        drawPicture();
+        LocalSearch.SimulatedAnnealingAlgo(positions, capList);
+        drawPicture();
         System.out.println("The width and height: " + img.width + " x " + img.height);
     }
 
     public void draw() {
         // Probably not going to use, although it would be nice to show the current progress of the algorithm
-        PImage tempImg = positions.get(0).getCap().image;
-        tempImg.resize(positions.get(0).radius * 2, 0);
-        image(positions.get(0).getCap().image, 0, 0);
-        fill(positions.get(0).getHue(), positions.get(0).getSaturation(), positions.get(0).getBrightness());
-        stroke(positions.get(0).getHue(), positions.get(0).getSaturation(), positions.get(0).getBrightness());
-        rect(positions.get(0).radius * 2, positions.get(0).radius * 2, positions.get(0).radius * 2, positions.get(0).radius * 2);
+//        int capPostionToTest = 55;
+//        PImage tempImg = positions.get(capPostionToTest).getCap().image;
+//        tempImg.resize(positions.get(capPostionToTest).radius * 2, 0);
+//        image(positions.get(capPostionToTest).getCap().image, 0, 0);
+//        fill(positions.get(capPostionToTest).getHue(), positions.get(capPostionToTest).getSaturation(), positions.get(capPostionToTest).getBrightness());
+//        stroke(positions.get(capPostionToTest).getHue(), positions.get(capPostionToTest).getSaturation(), positions.get(capPostionToTest).getBrightness());
+//        rect(positions.get(capPostionToTest).radius * 2, 0, positions.get(capPostionToTest).radius * 2, positions.get(capPostionToTest).radius * 2);
     }
 
     private void resizePicture() {
@@ -78,18 +79,6 @@ public class BottleCapVisualizer extends PApplet {
         stroke(pos.getHue(), pos.getSaturation(), pos.getBrightness());
         ellipse(pos.x_leftCorner, pos.y_topCorner, pos.radius * 2, pos.radius * 2);
     }
-
-    // FIXME these aren't reading the correct hue saturation of brightness but give a general idea
-//    public int brightnessOfImage(Position pos) {
-//        return (int) brightness(img.get(pos.x_leftCorner, pos.y_topCorner));
-//    }
-//    public int hueOfImage(Position pos) {
-//        return (int) hue(img.get(pos.x_leftCorner, pos.y_topCorner));
-//    }
-//    public int saturationOfImage(Position pos) {
-//        return (int) saturation(img.get(pos.x_leftCorner, pos.y_topCorner));
-//    }
-
 }
 // notes from Jack:
 // loss funtion!! least squares
