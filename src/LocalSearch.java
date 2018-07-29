@@ -24,17 +24,4 @@ public class LocalSearch {
         }
         return currState;
     }
-
-    public static void SimulatedAnnealingAlgo(ArrayList<Position> positions, ArrayList<BottleTopType> capList)
-    {
-        // Pick initial state, s
-        // k=0
-        // while k < k_max
-        //      T = temperature(k)
-        //      Randomly pick state t from neighbors of s
-        //      if f(t) > f(s) then s=t
-        //      else if (e^((f(t)-f(s))/T) > random() then s=t
-        //      k++
-        //  return s
-    }
 }
