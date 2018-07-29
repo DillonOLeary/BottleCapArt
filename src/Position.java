@@ -160,12 +160,12 @@ public class Position {
 
     public double evaluatePos() {
         // TODO what does the evaluation look like?
-//        return Math.abs(realColor.brightness - cap.brightness);
+        return Math.abs(realColor.brightness - cap.brightness);
 //        return Math.abs(realColor.hue - cap.hue);
 //        return  Math.abs(realColor.saturation - cap.saturation);
 //        return Math.abs(realColor.hue - cap.hue)+ Math.abs(realColor.saturation - cap.saturation) + Math.abs(realColor.brightness - cap.brightness);
         // This seems to be the coolest. I could try playing with the weighting, but I really like leaving off hue
-        return Math.abs(realColor.saturation - cap.saturation) + 3 * Math.abs(realColor.brightness - cap.brightness);
+//        return Math.abs(realColor.hue - cap.hue);
 
     }
 

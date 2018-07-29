@@ -13,6 +13,7 @@ public class BottleCapVisualizer extends PApplet {
     private static ArrayList<Position> positions;
     public static float percentCapUsage;
     private static PImage img;
+    PImage maskImage;
 
     public static void main(String args[]) {
         if (args.length == 0)
@@ -33,7 +34,6 @@ public class BottleCapVisualizer extends PApplet {
         ellipseMode(CORNER);
         background(100);
         img = loadImage(IMAGE_FILE_NAME);
-
         resizePicture();
         positions = Position.setupPositions(img, capList, percentCapUsage);
         // Set all the real colors
@@ -43,7 +43,8 @@ public class BottleCapVisualizer extends PApplet {
         }
         positions = LocalSearch.hillClimbing(positions, capList);
         LocalSearch.SimulatedAnnealingAlgo(positions, capList);
-        drawPicture();
+//        drawPicture();
+        drawPictureWithCaps();
         System.out.println("The width and height: " + img.width + " x " + img.height);
     }
 
@@ -78,6 +79,26 @@ public class BottleCapVisualizer extends PApplet {
         fill(pos.getHue(), pos.getSaturation(), pos.getBrightness());
         stroke(pos.getHue(), pos.getSaturation(), pos.getBrightness());
         ellipse(pos.x_leftCorner, pos.y_topCorner, pos.radius * 2, pos.radius * 2);
+    }
+
+    /**
+     * This method draws the picture with the actual cap photos, hopefully cropped,
+     * instead of with the colors.
+     */
+    public void drawPictureWithCaps() {
+        for (Position pos : positions)
+            drawPositionWithCaps(pos);
+//        drawPositionWithCaps(positions.get(0));
+    }
+
+    public void drawPositionWithCaps(Position pos) {
+        PImage tempImg = pos.getCap().image;
+        System.out.println("IMAGE WIDTH: " + tempImg.width + "  HEIGHT: " + tempImg.height);
+//        tempImg.resize(140,140);
+        PImage maskImage = loadImage("InvertedCircle.jpg");
+        tempImg.mask(maskImage);
+        //tempImg.resize(pos.radius * 2, 0);
+        image(pos.getCap().image, pos.x_leftCorner, pos.y_topCorner);
     }
 }
 // notes from Jack:

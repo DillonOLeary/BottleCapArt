@@ -96,9 +96,9 @@ public class State {
         return positions;
     }
     public List<State> generateSuccessors() {
-        // TODO how many successors?? I'll just go with 100
+        // TODO how many successors?? I'll just go with 50
         List<State> successors = new ArrayList<>();
-        for (int i=0; i<100; i++) {
+        for (int i=0; i<50; i++) {
             State newState = new State(this);
             newState.next();
             successors.add(newState);
