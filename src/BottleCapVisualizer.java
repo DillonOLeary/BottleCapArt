@@ -1,6 +1,9 @@
+import javafx.geometry.Pos;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import processing.core.PApplet;
 import processing.core.PImage;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class handles the high level construction of the
@@ -11,7 +14,6 @@ public class BottleCapVisualizer extends PApplet {
     private static final int WINDOW_HEIGHT = 750;
     private static final String IMAGE_FILE_NAME = "obama.jpg";
     private static final String CAP_INFORMATION_FILE = "CapImages/caps.txt";
-    private static final String MASK_IMG = "InvertedCircle.jpg";
 
     // the positions that the bottle caps are placed
     private static ArrayList<Position> positions;
@@ -19,8 +21,7 @@ public class BottleCapVisualizer extends PApplet {
     public static float percentCapUsage;
     // the image that the bottle caps are trying to make
     private PImage targetImage;
-    // the mask for the bottle cap display
-    private PImage maskImage;
+    private State currState;
 
     public static void main(String args[]) {
         if (args.length == 0)
@@ -40,7 +41,6 @@ public class BottleCapVisualizer extends PApplet {
         ellipseMode(CORNER);
         background(100);
         targetImage = loadImage(IMAGE_FILE_NAME);
-        maskImage = loadImage(MASK_IMG);
         resizePicture();
         positions = Position.setupPositions(targetImage, capList, percentCapUsage);
         // Set all the real colors
@@ -48,12 +48,35 @@ public class BottleCapVisualizer extends PApplet {
             pos.setRealColor(targetImage.get(pos.x_leftCorner, pos.y_topCorner,
                     pos.radius * 2, pos.radius * 2));
         }
-        positions = LocalSearch.hillClimbing(positions, capList);
-        drawPictureWithCaps();
+//        positions =  LocalSearch.hillClimbing(positions, capList);
+        currState = new State(positions, capList);
+        currState.fillPositionsWithRandomTops();
+        positions = currState.getPositions();
+        resizePictures(positions);
+    }
+
+    private static void resizePictures(ArrayList<Position> positions) {
+        for (Position pos : positions)
+            if (pos.getCap().image.width != pos.radius * 2)
+                pos.getCap().image.resize(pos.radius * 2, 0);
     }
 
     public void draw() {
         // Probably not going to use, although it would be nice to show the current progress of the algorithm
+        List<State> successors = currState.generateSuccessors();
+        State nextBestState = successors.get(0);
+        for (State state : successors) {
+            if (state.evaluateState() > nextBestState.evaluateState())
+                nextBestState = state;
+        }
+        if (nextBestState.evaluateState() <= currState.evaluateState()) {
+            System.out.println("DONE");
+
+        }
+        currState = nextBestState;
+        System.out.println("This round's best state: " + currState);
+        positions = currState.getPositions();
+        drawPictureWithCaps();
     }
 
     /**
@@ -74,6 +97,7 @@ public class BottleCapVisualizer extends PApplet {
      * instead of with the colors.
      */
     public void drawPictureWithCaps() {
+        background(0);
         for (Position pos : positions)
             drawPositionWithCaps(pos);
     }
@@ -83,9 +107,6 @@ public class BottleCapVisualizer extends PApplet {
      * @param pos the position to draw
      */
     public void drawPositionWithCaps(Position pos) {
-        PImage tempImg = pos.getCap().image;
-        System.out.println("IMAGE WIDTH: " + tempImg.width + "  HEIGHT: " + tempImg.height);
-        tempImg.mask(maskImage);
         image(pos.getCap().image, pos.x_leftCorner, pos.y_topCorner);
     }
 
