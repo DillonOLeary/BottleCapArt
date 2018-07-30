@@ -1,2 +1,8 @@
-300,CCCap.jpg
-300,CoronaCap.jpg
+70,CCCap.jpg
+70,NGCap.jpg
+70,AleAsylumCap.jpg
+70,BlueMoonCap.jpg
+70,CoronaCap.jpg
+70,K4Cap.jpg
+70,LeiniesCap.jpg
+70,NewBelgiumCap.jpg
