@@ -1,2 +1,2 @@
-400,CCCap.jpg
-400,NGCap.jpg
+300,CCCap.jpg
+300,CoronaCap.jpg
