@@ -1,2 +1,2 @@
-500,CCCap.jpg
-500,NGCap.jpg
+400,CCCap.jpg
+400,NGCap.jpg

@@ -160,7 +160,7 @@ public class Position {
 
     public double evaluatePos() {
         // TODO what does the evaluation look like?
-//        return Math.abs(realColor.brightness - cap.brightness);
+//        return 3*Math.abs(realColor.brightness - cap.brightness) + Math.abs(realColor.hue - cap.hue);
 //        return Math.abs(realColor.hue - cap.hue);
         return  Math.abs(realColor.saturation - cap.saturation);
 //        return Math.abs(realColor.hue - cap.hue)+ Math.abs(realColor.saturation - cap.saturation) + Math.abs(realColor.brightness - cap.brightness);
