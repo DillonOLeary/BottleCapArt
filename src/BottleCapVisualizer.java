@@ -1,5 +1,3 @@
-import javafx.geometry.Pos;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import processing.core.PApplet;
 import processing.core.PImage;
 import java.util.ArrayList;
@@ -12,7 +10,7 @@ import java.util.List;
 public class BottleCapVisualizer extends PApplet {
     private static final int WINDOW_WIDTH = 750;
     private static final int WINDOW_HEIGHT = 750;
-    private static final String IMAGE_FILE_NAME = "obama.jpg";
+    private static final String IMAGE_FILE_NAME = "TargetImages/logo.jpg";
     private static final String CAP_INFORMATION_FILE = "CapImages/caps.txt";
 
     // the positions that the bottle caps are placed
@@ -48,11 +46,18 @@ public class BottleCapVisualizer extends PApplet {
             pos.setRealColor(targetImage.get(pos.x_leftCorner, pos.y_topCorner,
                     pos.radius * 2, pos.radius * 2));
         }
-//        positions =  LocalSearch.hillClimbing(positions, capList);
+        setupInitialState(capList);
+        resizePictures(positions);
+    }
+
+    /**
+     * Setup the first state so that the hill climbing can run
+     * @param capList the list of tops
+     */
+    private void setupInitialState(ArrayList<BottleTopType> capList) {
         currState = new State(positions, capList);
         currState.fillPositionsWithRandomTops();
         positions = currState.getPositions();
-        resizePictures(positions);
     }
 
     private static void resizePictures(ArrayList<Position> positions) {
@@ -63,6 +68,17 @@ public class BottleCapVisualizer extends PApplet {
 
     public void draw() {
         // Probably not going to use, although it would be nice to show the current progress of the algorithm
+        nextBestState();
+        drawPictureWithCaps();
+    }
+
+    private int noImprovementsCnt = 0;
+    /**
+     * Generates the next best state for the program and stores it
+     * in the currState variable. Using this method with draw
+     * results in a basic hill climbing
+     */
+    private void nextBestState() {
         List<State> successors = currState.generateSuccessors();
         State nextBestState = successors.get(0);
         for (State state : successors) {
@@ -70,13 +86,16 @@ public class BottleCapVisualizer extends PApplet {
                 nextBestState = state;
         }
         if (nextBestState.evaluateState() <= currState.evaluateState()) {
-            System.out.println("DONE");
-
+            System.out.println("No state improvements: " + noImprovementsCnt);
+            // Just to stop at some point
+            if(noImprovementsCnt++ > 100)
+                noLoop();
+        } else {
+            noImprovementsCnt = 0;
+            System.out.println("This round's best state: " + currState);
         }
         currState = nextBestState;
-        System.out.println("This round's best state: " + currState);
         positions = currState.getPositions();
-        drawPictureWithCaps();
     }
 
     /**
@@ -96,7 +115,7 @@ public class BottleCapVisualizer extends PApplet {
      * This method draws the picture with the actual cropped cap photos
      * instead of with the colors.
      */
-    public void drawPictureWithCaps() {
+    private void drawPictureWithCaps() {
         background(0);
         for (Position pos : positions)
             drawPositionWithCaps(pos);
@@ -106,7 +125,7 @@ public class BottleCapVisualizer extends PApplet {
      * Draw the particular cap
      * @param pos the position to draw
      */
-    public void drawPositionWithCaps(Position pos) {
+    private void drawPositionWithCaps(Position pos) {
         image(pos.getCap().image, pos.x_leftCorner, pos.y_topCorner);
     }
 
